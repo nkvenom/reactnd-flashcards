@@ -1,6 +1,9 @@
 import React from 'react';
+import { Provider } from 'react-redux'
 import { StyleSheet, Text, View } from 'react-native';
 import { TabNavigator } from 'react-navigation';
+import DeckList from './components/DeckList';
+import store from './redux/store'
 
 const Hello = () => (
   <View>
@@ -26,10 +29,11 @@ const Tabs = TabNavigator({
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Hello iMundo #5!</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          <DeckList />
+        </View>
+      </Provider>
     );
   }
 }
