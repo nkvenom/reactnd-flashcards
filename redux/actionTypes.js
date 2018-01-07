@@ -1,0 +1,2 @@
+export const ADD_CARD = 'ADD_CARD'
+export const FETCH_DECKS_SUCCESS = 'FETCH_DECKS_SUCCESS'

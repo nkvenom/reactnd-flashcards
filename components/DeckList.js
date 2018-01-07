@@ -2,9 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View } from 'react-native'
 import DeckItem from './DeckItem'
-import dummyDb from '../temp/db-like.json'
+import { fetchDecks } from '../redux/actions'
+
 
 class DeckList extends Component {
+  componentDidMount = () => {
+    this.props.fetchDecks()
+  }
+
+
   gotoDetail = (deck) => {
     console.log('this.props.navigation=', this.props.navigation)
     this.props.navigation.navigate('DeckDetail', {
@@ -22,10 +28,10 @@ class DeckList extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-    decks: Object.values(dummyDb)
+const mapStateToProps = ({decks}) => ({
+    decks: Object.values(decks)
 })
 const mapDispatchToProps = {
-
+  fetchDecks
 }
 export default connect(mapStateToProps, mapDispatchToProps)(DeckList)
