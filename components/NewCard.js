@@ -1,27 +1,64 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, TextInput, View, StyleSheet } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { BigButton } from './BigButton'
 import { addCard } from '../redux/actions'
 
-
 class NewCard extends Component {
+  state = {
+    question: 'What is the meaning of Universe, Life And Everything',
+    answer: 'It is 42'
+  }
+
   static navigationOptions = ({ navigation }) => {
     const { title } = navigation.state.params
 
     return {
       title: `New Card for ${title}`
     }
-  };
+  }
+
+  questionChange = text => {
+    this.setState({
+      question: text
+    })
+  }
+
+  answerChange = text => {
+    this.setState({
+      answer: text
+    })
+  }
+
+  addCard = (e) => {
+    const card = this.state
+    const { title: deckTitle } = this.props
+    this.props.addCard(card, deckTitle)
+    this.props.navigation.navigate('DeckDetail', {
+      title: deckTitle,
+    })
+  }
 
   render() {
     return (
       <View style={styles.deckDetail}>
         <View style={styles.body}>
+          <TextInput
+            placeholder="Enter the question"
+            style={styles.textInput}
+            value={this.state.question}
+            onChangeText={this.questionChange}
+          />
+          <TextInput
+            placeholder="Enter the answer"
+            style={[styles.textInput, styles.textAnswer]}
+            value={this.state.answer}
+            onChangeText={this.answerChange}
+          />
         </View>
         <View style={styles.buttons}>
-          <BigButton onPress={this.addCard}>Submit</BigButton>
+          <BigButton style={styles.submitButton} onPress={this.addCard}>Submit</BigButton>
         </View>
       </View>
     )
@@ -31,20 +68,34 @@ const styles = StyleSheet.create({
   deckDetail: {
     flex: 1,
     alignItems: 'stretch',
-    justifyContent: 'center',
+    justifyContent: 'flex-start'
   },
   body: {
-    flex: 1,
-    alignItems: 'center',
+    marginTop: 10,
+    alignItems: 'stretch',
   },
-  buttons: {
+  buttons: {},
+  submitButton: {
+    marginTop: 10,
   },
-  startQuiz: {
-    backgroundColor: white,
-    color: purple,
+  textInput: {
+    marginTop: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    fontSize: 19,
+    height: 50,
+    padding: 5,
+    borderColor: '#DDDDDD',
+    borderWidth: 1
+  },
+  textAnswer: {
+    height: 80,
   }
 })
 const mapDispatchToProps = {
   addCard
 }
-export default connect(null, mapDispatchToProps)(NewCard)
+const mapStateToProps = (state, {navigation}) =>({
+  title: navigation.state.params.title
+})
+export default connect(mapStateToProps, mapDispatchToProps)(NewCard)

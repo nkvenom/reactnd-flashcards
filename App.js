@@ -8,17 +8,27 @@ import { AppStatusBar } from './components/StatusBar'
 import { white, purple } from './utils/colors'
 import DeckDetail from './components/DeckDetail'
 import NewCard from './components/NewCard'
+import NewDeck from './components/NewDeck'
 
 const MainNavigator = StackNavigator({
   Home: {
-    screen: DeckList,
+    screen: DeckList
   },
   DeckDetail: {
     screen: DeckDetail,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: purple,
+        backgroundColor: purple
+      }
+    }
+  },
+  NewDeck: {
+    screen: NewDeck,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple
       }
     }
   },
@@ -27,10 +37,9 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: purple,
+        backgroundColor: purple
       }
     }
-
   }
 })
 
@@ -48,6 +57,6 @@ export default class App extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
+    flex: 1
+  }
 })

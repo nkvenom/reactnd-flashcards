@@ -13,23 +13,25 @@ class DeckDetail extends Component {
     }
   };
 
-  componentDidMount = () => {
-    console.log('this.props=', this.props)
+  getCardCount = deck => {
+    return deck && deck.cards ? deck.cards.length : 0
   };
 
   addCard = () => {
-    console.log('this.props.title=', this.props.title)
     this.props.navigation.navigate('NewCard', {
       title: this.props.title
     })
   };
 
   render() {
+    const { deck } = this.props
+
+    if (!deck) return null
     return (
       <View style={styles.deckDetail}>
         <View style={styles.body}>
-          <Text style={styles.title}> React </Text>
-          <Text style={styles.cardCount}> 5 Cards</Text>
+          <Text style={styles.title}> {deck.title} </Text>
+          <Text style={styles.cardCount}> {this.getCardCount(deck)} Cards</Text>
         </View>
         <View style={styles.buttons}>
           <BigButton onPress={this.addCard}>Add Card</BigButton>
@@ -64,12 +66,13 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (
-  state,
+  {decks},
   {navigation}
 ) => {
   const { title } = navigation.state.params
   return {
-    title
+    title,
+    deck: decks[title]
   }
 }
 const mapDispatchToProps = {}

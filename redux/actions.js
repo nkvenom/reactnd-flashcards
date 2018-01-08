@@ -1,26 +1,46 @@
 import * as api from '../utils/api'
-import dummyDb from '../data/dummy-db.json'
 import * as types from './actionTypes'
 
-
-
-export const addCard = (card) => ({
-  type: types.ADD_CARD,
-  card,
+export const failure = error => ({
+  error: error.message,
+  stack: error.stack
 })
 
-export const fetchDecks = () => async dispatch => {
-  let decks = await api.fetchDecks()
-  console.log('found som decks=', decks)
-  if (!decks) {
-    decks = dummyDb
-  }
+export const addCardSuccess = (card, deckTitle) => ({
+  type: types.ADD_CARD_SUCCESS,
+  deckTitle,
+  card
+})
 
-  dispatch(fetchDecksSuccess(decks))
-  return decks
+export const addDeckSuccess = (deck) => ({
+  type: types.ADD_DECK_SUCCESS,
+  deck
+})
+
+export const addCard = (card, deckTitle) => async (dispatch, getState) => {
+  const { decks: { [deckTitle]: deck } } = getState()
+  api.addCard({ card, deck })
+  dispatch(addCardSuccess(card, deckTitle))
 }
 
-export const fetchDecksSuccess = (decks) => ({
+export const addDeck = (deckTitle) => async (dispatch, getState) => {
+  const deck = { title: deckTitle, cards: [] }
+  const res = await api.saveDeck(deck)
+  return dispatch(addDeckSuccess(deck))
+}
+
+export const fetchDecks = () => async dispatch => {
+  try {
+    let decks = await api.fetchDecks()
+
+    dispatch(fetchDecksSuccess(decks))
+    return decks
+  } catch (error) {
+    return dispatch(failure(error))
+  }
+}
+
+export const fetchDecksSuccess = decks => ({
   type: types.FETCH_DECKS_SUCCESS,
   decks
 })
