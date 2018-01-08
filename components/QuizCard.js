@@ -37,22 +37,26 @@ class QuizCard extends Component {
 
   scoreAnswer = (option) => {
     const { wrongCount, correctCount, cardIdx } = this.state
+    let updatedCorrectCount = correctCount
+    let updatedWrongCount = wrongCount
     const { deck } = this.props
     if (option === 'correct') {
+      updatedCorrectCount++
       this.setState({
-        correctCount: correctCount + 1
+        correctCount: updatedCorrectCount
       })
     } else {
+      updatedWrongCount++
       this.setState({
-        wrongCount: wrongCount + 1
+        wrongCount: updatedWrongCount
       })
     }
 
     if (cardIdx === deck.cards.length - 1) {
       this.props.navigation.navigate('QuizResults', {
         title: deck.title,
-        wrongCount,
-        correctCount,
+        correctCount: updatedCorrectCount,
+        wrongCount: updatedWrongCount,
       })
 
       console.log('Going to results')

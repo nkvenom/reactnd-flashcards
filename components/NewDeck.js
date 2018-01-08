@@ -43,7 +43,7 @@ class NewCard extends Component {
         </View>
         <View style={styles.buttons}>
           <BigButton style={styles.submitButton} onPress={this.addDeck}>
-            Submit
+            Create Deck
           </BigButton>
         </View>
       </View>
