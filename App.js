@@ -9,6 +9,8 @@ import { white, purple } from './utils/colors'
 import DeckDetail from './components/DeckDetail'
 import NewCard from './components/NewCard'
 import NewDeck from './components/NewDeck'
+import QuizCard from './components/QuizCard'
+import QuizResults from './components/QuizResults'
 
 const MainNavigator = StackNavigator({
   Home: {
@@ -34,6 +36,24 @@ const MainNavigator = StackNavigator({
   },
   NewCard: {
     screen: NewCard,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple
+      }
+    }
+  },
+  QuizCard: {
+    screen: QuizCard,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple
+      }
+    }
+  },
+  QuizResults: {
+    screen: QuizResults,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {

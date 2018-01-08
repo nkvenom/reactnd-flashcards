@@ -11,17 +11,23 @@ class DeckDetail extends Component {
     return {
       title: `Deck: ${title}`
     }
-  };
+  }
 
   getCardCount = deck => {
     return deck && deck.cards ? deck.cards.length : 0
-  };
+  }
 
   addCard = () => {
     this.props.navigation.navigate('NewCard', {
       title: this.props.title
     })
-  };
+  }
+
+  startQuiz = () => {
+    this.props.navigation.navigate('QuizCard', {
+      title: this.props.title
+    })
+  }
 
   render() {
     const { deck } = this.props
@@ -35,7 +41,7 @@ class DeckDetail extends Component {
         </View>
         <View style={styles.buttons}>
           <BigButton onPress={this.addCard}>Add Card</BigButton>
-          <BigButton style={styles.startQuiz}>Start Quiz</BigButton>
+          <BigButton onPress={this.startQuiz} style={styles.startQuiz}>Start Quiz</BigButton>
         </View>
       </View>
     )
