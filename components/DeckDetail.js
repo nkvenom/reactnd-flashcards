@@ -40,7 +40,7 @@ class DeckDetail extends Component {
           <Text style={styles.cardCount}> {this.getCardCount(deck)} Cards</Text>
         </View>
         <View style={styles.buttons}>
-          <BigButton onPress={this.addCard}>Add Card</BigButton>
+          <BigButton onPress={this.addCard}>New Question</BigButton>
           <BigButton onPress={this.startQuiz} style={styles.startQuiz}>Start Quiz</BigButton>
         </View>
       </View>

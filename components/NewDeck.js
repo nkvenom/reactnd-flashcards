@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, TextInput, View, StyleSheet } from 'react-native'
+import { Text, TextInput, View, StyleSheet, Keyboard } from 'react-native'
 import { BigButton } from './BigButton'
 import { addDeck } from '../redux/actions'
 
@@ -23,7 +23,7 @@ class NewCard extends Component {
 
   addDeck = async () => {
     const { title: deckTitle } = this.state
-
+    Keyboard.dismiss()
     await this.props.addDeck(deckTitle)
     this.props.navigation.navigate('DeckDetail', {
       title: deckTitle

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, TextInput, View, StyleSheet } from 'react-native'
-import { purple, white } from '../utils/colors'
+import { Keyboard, TextInput, View, StyleSheet } from 'react-native'
 import { BigButton } from './BigButton'
 import { addCard } from '../redux/actions'
 
@@ -38,6 +37,7 @@ class NewCard extends Component {
     this.props.navigation.navigate('DeckDetail', {
       title: deckTitle,
     })
+    Keyboard.dismiss()
   }
 
   render() {
