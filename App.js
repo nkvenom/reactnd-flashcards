@@ -11,10 +11,18 @@ import NewCard from './components/NewCard'
 import NewDeck from './components/NewDeck'
 import QuizCard from './components/QuizCard'
 import QuizResults from './components/QuizResults'
+import { setLocalNotification, clearLocalNotification } from './utils/notifications'
 
 const MainNavigator = StackNavigator({
   Home: {
-    screen: DeckList
+    screen: DeckList,
+    navigationOptions: {
+      title: '⚡🌎 Flash Cards',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple
+      }
+    }
   },
   DeckDetail: {
     screen: DeckDetail,
@@ -63,7 +71,16 @@ const MainNavigator = StackNavigator({
   }
 })
 
+
+console.log('starting up')
 export default class App extends React.Component {
+  componentDidMount() {
+    console.log('App Comp:mounted')
+    clearLocalNotification().then(() => {
+      setLocalNotification('today')
+    })
+  }
+
   render() {
     return (
       <Provider store={store}>

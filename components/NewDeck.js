@@ -20,6 +20,7 @@ class NewCard extends Component {
       title: text
     })
   };
+
   addDeck = async () => {
     const { title: deckTitle } = this.state
 

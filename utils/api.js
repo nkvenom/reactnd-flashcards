@@ -1,16 +1,18 @@
 import { AsyncStorage } from 'react-native'
 import dummyDb from '../data/dummy-db.json'
-const DECKS_STORAGE_KEY = 'FCards:Decks'
+const DECKS_STORAGE_KEY = 'FlashCards:Decks'
 
-export async function saveDummyDb() {
-  console.log('saving dummyDb=', dummyDb)
-  await saveDecks(dummyDb)
-  console.log('saved')
+export async function createDummyDb() {
+  return await saveDecks(dummyDb)
 }
 
 export async function fetchDecks() {
   const strDecks = await AsyncStorage.getItem(DECKS_STORAGE_KEY)
-  if (!strDecks) return dummyDb
+  if (!strDecks) {
+    console.log('no decks found, loading dummy db')
+    await createDummyDb()
+    return dummyDb
+  }
   return JSON.parse(strDecks)
 }
 

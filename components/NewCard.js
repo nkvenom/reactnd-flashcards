@@ -7,8 +7,8 @@ import { addCard } from '../redux/actions'
 
 class NewCard extends Component {
   state = {
-    question: 'What is the meaning of Universe, Life And Everything',
-    answer: 'It is 42'
+    question: '',
+    answer: ''
   }
 
   static navigationOptions = ({ navigation }) => {
