@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Text, View, StyleSheet } from 'react-native'
 import { BigButton } from './BigButton'
 import { addDeck } from '../redux/actions'
-import { clearLocalNotification } from '../utils/notifications'
+import { clearLocalNotification, setLocalNotification } from '../utils/notifications'
 
 class QuizResults extends Component {
   state = {
@@ -17,10 +17,10 @@ class QuizResults extends Component {
   };
 
   componentDidMount = () => {
-    // If we get to this point cancel the notification for today
-    clearLocalNotification()
+    clearLocalNotification().then(() => {
+      setLocalNotification()
+    })
   }
-
 
   backToDeck = () => {
     const { deck } = this.props

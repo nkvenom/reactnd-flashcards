@@ -12,6 +12,7 @@ import NewDeck from './components/NewDeck'
 import QuizCard from './components/QuizCard'
 import QuizResults from './components/QuizResults'
 import { setLocalNotification, clearLocalNotification } from './utils/notifications'
+import { hasStudiedToday } from './utils/api'
 
 const MainNavigator = StackNavigator({
   Home: {
@@ -72,13 +73,15 @@ const MainNavigator = StackNavigator({
 })
 
 
-console.log('starting up')
+console.log('running App.js')
 export default class App extends React.Component {
   componentDidMount() {
     console.log('App Comp:mounted')
-    clearLocalNotification().then(() => {
-      setLocalNotification('today')
-    })
+    this.setupNotifications()
+  }
+
+  setupNotifications = async () => {
+    setLocalNotification()
   }
 
   render() {

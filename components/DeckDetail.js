@@ -24,6 +24,11 @@ class DeckDetail extends Component {
   }
 
   startQuiz = () => {
+    if (this.getCardCount() === 0) {
+      console.log('First add some cards to the deck')
+      return
+    }
+
     this.props.navigation.navigate('QuizCard', {
       title: this.props.title
     })
