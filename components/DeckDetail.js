@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, View, StyleSheet, Animated, Dimensions } from 'react-native'
+import { Text, View, StyleSheet, Animated, Dimensions, Easing } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { BigButton } from './BigButton'
 
@@ -29,10 +29,17 @@ class DeckDetail extends Component {
   }
 
   setupAnimation = () => {
-    const { left } = this.state
+    const { left, buttonsOpacity } = this.state
+
     Animated.spring(left, {
       toValue: 0,
-      speed: 5,
+      speed: 7,
+    }).start()
+
+    Animated.timing(buttonsOpacity, {
+      toValue: 1,
+      duration: 700,
+      easing: Easing.in,
     }).start()
   }
 
@@ -59,7 +66,7 @@ class DeckDetail extends Component {
 
   render() {
     const { deck } = this.props
-    const { left } = this.state
+    const { left, buttonsOpacity } = this.state
 
     if (!deck) return null
     return (
@@ -68,12 +75,12 @@ class DeckDetail extends Component {
           <Text style={styles.title}> {deck.title} </Text>
           <Text style={styles.cardCount}> {this.getCardCount(deck)} Cards</Text>
         </View>
-        <View style={styles.buttons}>
+        <Animated.View style={[styles.buttons, { opacity: buttonsOpacity }]}>
           <BigButton onPress={this.addCard}>New Question</BigButton>
           <BigButton onPress={this.startQuiz} style={styles.startQuiz}>
             Start Quiz
           </BigButton>
-        </View>
+        </Animated.View>
       </Animated.View>
     )
   }
