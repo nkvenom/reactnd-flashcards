@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Animated, Dimensions } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { BigButton } from './BigButton'
 
 class DeckDetail extends Component {
+  state = {
+    left: null,
+    buttonsOpacity: new Animated.Value(0),
+  }
+
   static navigationOptions = ({ navigation }) => {
     const { title } = navigation.state.params
 
@@ -13,15 +18,33 @@ class DeckDetail extends Component {
     }
   }
 
+  componentDidMount() {
+    const { width } = Dimensions.get('window')
+    this.setState(
+      {
+        left: new Animated.Value(width)
+      },
+      this.setupAnimation
+    )
+  }
+
+  setupAnimation = () => {
+    const { left } = this.state
+    Animated.spring(left, {
+      toValue: 0,
+      speed: 5,
+    }).start()
+  }
+
   getCardCount = deck => {
     return deck && deck.cards ? deck.cards.length : 0
-  }
+  };
 
   addCard = () => {
     this.props.navigation.navigate('NewCard', {
       title: this.props.title
     })
-  }
+  };
 
   startQuiz = () => {
     if (this.getCardCount() === 0) {
@@ -32,23 +55,26 @@ class DeckDetail extends Component {
     this.props.navigation.navigate('QuizCard', {
       title: this.props.title
     })
-  }
+  };
 
   render() {
     const { deck } = this.props
+    const { left } = this.state
 
     if (!deck) return null
     return (
-      <View style={styles.deckDetail}>
+      <Animated.View style={[styles.deckDetail, { left }]}>
         <View style={styles.body}>
           <Text style={styles.title}> {deck.title} </Text>
           <Text style={styles.cardCount}> {this.getCardCount(deck)} Cards</Text>
         </View>
         <View style={styles.buttons}>
           <BigButton onPress={this.addCard}>New Question</BigButton>
-          <BigButton onPress={this.startQuiz} style={styles.startQuiz}>Start Quiz</BigButton>
+          <BigButton onPress={this.startQuiz} style={styles.startQuiz}>
+            Start Quiz
+          </BigButton>
         </View>
-      </View>
+      </Animated.View>
     )
   }
 }
@@ -56,7 +82,9 @@ const styles = StyleSheet.create({
   deckDetail: {
     flex: 1,
     alignItems: 'stretch',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#CCCCCC'
   },
   body: {
     flex: 1,
@@ -76,10 +104,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = (
-  {decks},
-  {navigation}
-) => {
+const mapStateToProps = ({ decks }, { navigation }) => {
   const { title } = navigation.state.params
   return {
     title,

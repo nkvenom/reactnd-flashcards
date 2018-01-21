@@ -11,8 +11,7 @@ import NewCard from './components/NewCard'
 import NewDeck from './components/NewDeck'
 import QuizCard from './components/QuizCard'
 import QuizResults from './components/QuizResults'
-import { setLocalNotification, clearLocalNotification } from './utils/notifications'
-import { hasStudiedToday } from './utils/api'
+import { setLocalNotification, } from './utils/notifications'
 
 const MainNavigator = StackNavigator({
   Home: {
