@@ -20,14 +20,6 @@ class QuizCard extends Component {
     }
   }
 
-  componentDidMount = () => {
-    console.log('deck=', this.props.deck)
-  }
-
-  componentWillReceiveProps = nextProps => {
-    console.log('cwrp')
-  }
-
   showAnswer = () => {
     console.log('shiwAns pressed')
     this.setState(({ showAnswer }) => ({

@@ -54,7 +54,7 @@ class DeckDetail extends Component {
   };
 
   startQuiz = () => {
-    if (this.getCardCount() === 0) {
+    if (this.getCardCount(this.props.deck) === 0) {
       console.log('First add some cards to the deck')
       return
     }

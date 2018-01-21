@@ -3,7 +3,11 @@ import { connect } from 'react-redux'
 import { Text, View, StyleSheet } from 'react-native'
 import { BigButton } from './BigButton'
 import { addDeck } from '../redux/actions'
-import { clearLocalNotification, setLocalNotification } from '../utils/notifications'
+import {
+  clearLocalNotification,
+  setLocalNotification
+} from '../utils/notifications'
+import { NavigationActions } from 'react-navigation'
 
 class QuizResults extends Component {
   state = {
@@ -20,20 +24,27 @@ class QuizResults extends Component {
     clearLocalNotification().then(() => {
       setLocalNotification()
     })
+  };
+
+  resetActionCreator = routeName => {
+    const { deck } = this.props
+    return NavigationActions.reset({
+      index: 1,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Home' }),
+        NavigationActions.navigate({ routeName, params: { title: deck.title } })
+      ]
+    })
   }
 
   backToDeck = () => {
-    const { deck } = this.props
-    this.props.navigation.navigate('DeckDetail', {
-      title: deck.title
-    })
+    const action = this.resetActionCreator('DeckDetail')
+    this.props.navigation.dispatch(action)
   };
 
   restartQuiz = () => {
-    const { deck } = this.props
-    this.props.navigation.navigate('QuizCard', {
-      title: deck.title
-    })
+    const action = this.resetActionCreator('QuizCard')
+    this.props.navigation.dispatch(action)
   };
 
   render() {
@@ -68,7 +79,7 @@ class QuizResults extends Component {
 }
 const styles = StyleSheet.create({
   quizResults: {
-    flex: 1,
+    flex: 1
   },
   body: {
     flex: 1,
@@ -76,7 +87,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch'
   },
   buttons: {
-    flex: 0,
+    flex: 0
   },
   submitButton: {
     marginTop: 10
@@ -84,17 +95,17 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 40,
-    marginBottom: 20,
+    marginBottom: 20
   },
   resultsDetail: {
     fontSize: 20,
-     paddingLeft: 10,
-     paddingRight: 10,
+    paddingLeft: 10,
+    paddingRight: 10
   },
   titleMainResult: {
     marginTop: 25,
     textAlign: 'center',
-    fontSize: 35,
+    fontSize: 35
   },
   mainResult: {
     textAlign: 'center',
